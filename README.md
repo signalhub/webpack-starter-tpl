@@ -1,0 +1,1 @@
+Webpack empty template with the initial settings
