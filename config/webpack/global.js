@@ -7,6 +7,8 @@ var TextPlugin = require('extract-text-webpack-plugin');
 var HtmlPlugin = require('html-webpack-plugin-extra-files');
 var jsonPresent = require('./helpers/json-presenter');
 
+var SvgStore = require('webpack-svgstore-plugin');
+
 module.exports = function(_path) {
     var appPath = path.join(_path, 'app'),
         assetsPath = path.join(appPath, 'assets'),
@@ -132,6 +134,28 @@ module.exports = function(_path) {
                 template: path.join(aliases._asset_layouts, 'index.html'),
             }),
             new webpack.optimize.UglifyJsPlugin(),
-        ],
+
+            new SvgStore(
+                //=========> input path
+                [
+                    path.join(aliases._images, 'svg', '**/*.svg'),
+                    '!' + path.join(aliases._images, 'svg', 'excludeFolder', '**/*.svg'),
+                ],
+                //=========> output path
+                'svg',
+                //=========> options
+                {
+                    name: '[hash].sprite.svg',
+                    chunk: 'app',
+                    baseUrl: '//path-to-cdn:port/',
+                    prefix: 'myprefix-',
+                    svgoOptions: {
+                        plugins: [
+                            { removeTitle: true }
+                        ]
+                    }
+                }
+            )
+        ]
     };
 };
