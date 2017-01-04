@@ -4,4 +4,7 @@
 require('normalize.css');
 require('./app.styl');
 
-console.log('Hello world!');
+var __svg__ = { path: 'assets/images/svg/*.svg', name: 'assets/images/svg-build/[hash].buttons.svg' };
+require('webpack-svgstore-plugin/src/helpers/svgxhr')(__svg__);
+
+// console.log('Hello world!');

@@ -135,27 +135,14 @@ module.exports = function(_path) {
             }),
             new webpack.optimize.UglifyJsPlugin(),
 
-            new SvgStore(
-                //=========> input path
-                [
-                    path.join(aliases._images, 'svg', '**/*.svg'),
-                    '!' + path.join(aliases._images, 'svg', 'excludeFolder', '**/*.svg'),
-                ],
-                //=========> output path
-                'svg',
-                //=========> options
-                {
-                    name: '[hash].sprite.svg',
-                    chunk: 'app',
-                    baseUrl: '//path-to-cdn:port/',
-                    prefix: 'myprefix-',
-                    svgoOptions: {
-                        plugins: [
-                            { removeTitle: true }
-                        ]
-                    }
+            new SvgStore.Options({
+                // svgo options
+                svgoOptions: {
+                    plugins: [
+                        { removeTitle: true }
+                    ]
                 }
-            )
+            })
         ]
     };
 };
